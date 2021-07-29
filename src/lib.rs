@@ -195,8 +195,9 @@ impl FontTexture {
 
             let mut result = Vec::new();
 
-            let mut g: freetype::FT_UInt = std::mem::uninitialized();
-            let mut c = freetype::FT_Get_First_Char(face, &mut g);
+            let mut g: std::mem::MaybeUninit<freetype::FT_UInt> = std::mem::MaybeUninit::uninit();
+            let mut c = freetype::FT_Get_First_Char(face, g.as_mut_ptr());
+            let mut g = g.assume_init();
 
             while g != 0 {
                 result.push(std::mem::transmute(c as u32)); // TODO: better solution?
