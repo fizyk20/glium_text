@@ -444,6 +444,7 @@ pub fn draw<F, S: ?Sized, M>(
     target: &mut S,
     matrix: M,
     color: (f32, f32, f32, f32),
+    draw_params: DrawParameters,
 ) where
     S: glium::Surface,
     M: Into<[[f32; 4]; 4]>,
@@ -495,7 +496,7 @@ pub fn draw<F, S: ?Sized, M>(
 
         DrawParameters {
             blend: blend,
-            ..Default::default()
+            ..draw_params
         }
     };
     target
